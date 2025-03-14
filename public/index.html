@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adani Power - Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen overflow-x-hidden">
+  <!-- Header -->
+  <header class="bg-adani-blue text-white p-4 flex justify-between items-center shadow-md fixed top-0 left-0 right-0 z-20">
+    <div class="flex items-center">
+      <button id="sidebar-toggle" class="mr-4 focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <img src="https://www.adanipower.com/-/media/Project/Power/Header-Footer/logo.png" alt="Adani Power Logo" class="h-8 mr-3">
+      <div>
+        <h1 class="text-xl font-bold">HP Heater Optimization</h1>
+        <div class="text-sm opacity-80" id="current-time"></div>
+      </div>
+    </div>
+    <div class="text-right">
+      <div class="text-sm opacity-80">Mundra Power Plant</div>
+      <div class="text-sm opacity-80">Unit 5</div>
+    </div>
+  </header>
+
+  <div class="flex pt-16">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="bg-adani-navy text-white fixed h-full transition-all duration-300 shadow-lg z-10 top-16">
+      <nav class="p-4">
+        <ul class="space-y-2">
+          <li>
+            <a href="index.html" class="block p-2 rounded bg-white bg-opacity-20 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              <span class="sidebar-text">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="analytics.html" class="block p-2 rounded hover:bg-white hover:bg-opacity-10 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              <span class="sidebar-text">Analytics</span>
+            </a>
+          </li>
+          <li>
+            <a href="reports.html" class="block p-2 rounded hover:bg-white hover:bg-opacity-10 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span class="sidebar-text">Reports</span>
+            </a>
+          </li>
+          <li>
+            <a href="feedback.html" class="block p-2 rounded hover:bg-white hover:bg-opacity-10 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+              </svg>
+              <span class="sidebar-text">Feedback</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="block p-2 rounded hover:bg-white hover:bg-opacity-10 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span class="sidebar-text">Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="main-content" class="flex-1 p-6 transition-all duration-300 min-h-screen">
+      <!-- Dashboard Content -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <!-- KPI Cards -->
+        <div class="top-bar-item">
+          <div class="top-bar-icon text-adani-blue">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-sm text-gray-500">HP Heater Load</div>
+            <div class="text-xl font-bold text-adani-blue" id="hp-heater-load">95.2 MW</div>
+          </div>
+        </div>
+        
+        <div class="top-bar-item">
+          <div class="top-bar-icon text-adani-green">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-sm text-gray-500">Eco Inlet Gain</div>
+            <div class="text-xl font-bold text-adani-green" id="eco-inlet-gain">+2.3°C</div>
+          </div>
+        </div>
+        
+        <div class="top-bar-item">
+          <div class="top-bar-icon text-adani-yellow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-sm text-gray-500">System Health</div>
+            <div class="text-xl font-bold text-adani-green" id="system-health">Good</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Content Sections -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <!-- Left Column - Heater Diagram -->
+        <div class="bg-white p-4 rounded-lg shadow-md md:col-span-2">
+          <h2 class="text-lg font-semibold text-adani-navy mb-4">HP Heater Overview</h2>
+          <div class="relative p-4 border rounded-lg bg-gray-50 same-height" id="heater-diagram">
+            <div class="grid grid-cols-3 gap-4">
+              <!-- HP Heater 1 -->
+              <div class="parameter-card">
+                <div class="parameter-header">
+                  <div class="parameter-title">HP Heater 1</div>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-adani-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div class="parameter-value" id="hp1-level">62.5%</div>
+                <div class="text-sm text-gray-500 mb-2">Level</div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <div class="text-xs text-gray-500">TTD</div>
+                    <div class="font-medium" id="hp1-ttd">1.8°C</div>
+                  </div>
+                  <div>
+                    <div class="text-xs text-gray-500">DCA</div>
+                    <div class="font-medium" id="hp1-dca">4.2°C</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- HP Heater 2 -->
+              <div class="parameter-card">
+                <div class="parameter-header">
+                  <div class="parameter-title">HP Heater 2</div>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-adani-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div class="parameter-value text-adani-yellow" id="hp2-level">73.2%</div>
+                <div class="text-sm text-gray-500 mb-2">Level</div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <div class="text-xs text-gray-500">TTD</div>
+                    <div class="font-medium" id="hp2-ttd">2.1°C</div>
+                  </div>
+                  <div>
+                    <div class="text-xs text-gray-500">DCA</div>
+                    <div class="font-medium" id="hp2-dca">5.3°C</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- HP Heater 3 -->
+              <div class="parameter-card">
+                <div class="parameter-header">
+                  <div class="parameter-title">HP Heater 3</div>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-adani-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div class="parameter-value" id="hp3-level">55.8%</div>
+                <div class="text-sm text-gray-500 mb-2">Level</div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <div class="text-xs text-gray-500">TTD</div>
+                    <div class="font-medium" id="hp3-ttd">1.5°C</div>
+                  </div>
+                  <div>
+                    <div class="text-xs text-gray-500">DCA</div>
+                    <div class="font-medium" id="hp3-dca">3.8°C</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Temperature Values -->
+            <div class="grid grid-cols-3 gap-4 mt-4">
+              <div class="bg-white p-3 rounded-lg border">
+                <div class="text-xs text-gray-500">Extraction Steam Temp.</div>
+                <div class="text-lg font-medium" id="extraction-temp">324.5°C</div>
+              </div>
+              <div class="bg-white p-3 rounded-lg border">
+                <div class="text-xs text-gray-500">Feedwater Outlet Temp.</div>
+                <div class="text-lg font-medium" id="fw-outlet-temp">251.3°C</div>
+              </div>
+              <div class="bg-white p-3 rounded-lg border">
+                <div class="text-xs text-gray-500">Economizer Inlet Temp.</div>
+                <div class="text-lg font-medium text-adani-green" id="eco-inlet-temp">252.8°C</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right Column - Status & Recommendations -->
+        <div class="bg-white p-4 rounded-lg shadow-md">
+          <h2 class="text-lg font-semibold text-adani-navy mb-4">System Status</h2>
+          <div class="border rounded-lg p-4 bg-gray-50 same-height">
+            <!-- Status Indicators -->
+            <div class="flex items-center mb-4">
+              <div class="bg-adani-green rounded-full h-3 w-3 mr-2"></div>
+              <div class="text-sm font-medium">All Heaters Operating Normally</div>
+            </div>
+            
+            <!-- Notifications -->
+            <h3 class="text-sm font-medium text-gray-600 border-b pb-2 mb-2">Recent Notifications</h3>
+            <div class="space-y-3" id="notifications-container">
+              <div class="bg-yellow-100 p-2 rounded-lg text-sm border border-adani-yellow">
+                <div class="flex items-center text-adani-yellow mb-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <span class="font-medium">HP2 Level Warning</span>
+                </div>
+                <p class="text-gray-700">HP Heater 2 level above recommended threshold (73.2%). Adjust drain valve to maintain optimal level.</p>
+              </div>
+              
+              <div class="bg-blue-100 p-2 rounded-lg text-sm border">
+                <div class="flex items-center text-adani-blue mb-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span class="font-medium">System Update</span>
+                </div>
+                <p class="text-gray-700">Optimization algorithm adjusted HP1 temperature ratio for improved efficiency.</p>
+              </div>
+              
+              <div class="bg-green-100 p-2 rounded-lg text-sm border">
+                <div class="flex items-center text-adani-green mb-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span class="font-medium">Performance Achievement</span>
+                </div>
+                <p class="text-gray-700">Eco inlet temperature improved by 2.3°C from baseline. Estimated benefit: 0.48% heat rate improvement.</p>
+              </div>
+            </div>
+            
+            <!-- Recommendations -->
+            <h3 class="text-sm font-medium text-gray-600 border-b pb-2 mb-2 mt-4">Recommendations</h3>
+            <div class="space-y-2">
+              <div class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-adani-blue mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <p class="text-sm text-gray-700">Reduce HP2 level to 65-70% range for optimal performance.</p>
+              </div>
+              <div class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-adani-blue mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <p class="text-sm text-gray-700">Schedule routine inspection of HP3 drain valves during next maintenance window.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Performance Trends -->
+      <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold text-adani-navy">Performance Trends</h2>
+          <div class="flex space-x-2">
+            <button class="px-3 py-1 bg-gray-50 border rounded-lg text-sm">1D</button>
+            <button class="px-3 py-1 bg-adani-blue text-white border rounded-lg text-sm">7D</button>
+            <button class="px-3 py-1 bg-gray-50 border rounded-lg text-sm">30D</button>
+          </div>
+        </div>
+        <div>
+          <canvas id="performance-chart"></canvas>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="common.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
