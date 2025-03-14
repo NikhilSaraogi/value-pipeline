@@ -6,6 +6,7 @@
   --adani-green: #00A650;
   --adani-red: #FF3A3A;
   --adani-yellow: #FFC107;
+  --adani-gray: #F8F9FA;
 }
 
 /* Modern header styling */
@@ -228,6 +229,11 @@
 
 .tab-content {
   padding-top: 1rem;
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
 }
 
 /* Chart container styling */
